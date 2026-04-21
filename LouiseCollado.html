@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Louise Jay C. Collado | QA Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #040812;
+  --surface: #0f1623;
+  --surface2: #161e2e;
+  --accent: #00e5ff;
+  --accent2: #7b61ff;
+  --gold: #f0c040;
+  --pass: #00e676;
+  --fail: #ff5370;
+  --text: #e8edf5;
+  --muted: #6b7a99;
+  --border: rgba(255,255,255,0.07);
+  --glow: 0 0 40px rgba(0,229,255,0.08);
+}
+
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;position:relative;z-index:0}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:center;align-items:center;padding:16px 0;background:rgba(8,12,20,0.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,229,255,0.12);width:100%}
+.nav-links{display:flex;gap:36px;justify-content:center;align-items:center;margin:0 auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-family:'DM Mono',monospace;letter-spacing:0.5px;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.3s}
+.nav-links a:hover{color:var(--accent)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--accent)}
+.nav-links a.active::after{width:100%}
+header{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 20px 80px;background:radial-gradient(ellipse 80% 70% at 50% 0%,rgba(123,97,255,0.22) 0%,rgba(0,229,255,0.08) 50%,transparent 75%)}
+.hero-badge{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent);letter-spacing:3px;text-transform:uppercase;border:1px solid rgba(0,229,255,0.25);padding:6px 16px;border-radius:20px;margin-bottom:28px;background:rgba(0,229,255,0.05);animation:fadeDown 0.8s ease both}
+header h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,7vw,5rem);line-height:1.05;letter-spacing:-2px;animation:fadeDown 0.9s 0.1s ease both}
+.name-gradient{background:linear-gradient(135deg,#fff 30%,var(--accent) 70%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-family:'DM Mono',monospace;font-size:0.9rem;color:var(--muted);margin-top:16px;letter-spacing:1px;animation:fadeDown 1s 0.2s ease both}
+.hero-desc{max-width:480px;color:var(--muted);line-height:1.7;margin:20px auto 36px;font-size:0.95rem;animation:fadeDown 1s 0.3s ease both}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeDown 1s 0.4s ease both}
+.btn-primary{padding:13px 28px;border-radius:8px;font-weight:600;font-size:0.9rem;cursor:pointer;text-decoration:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#080c14;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 0 30px rgba(0,229,255,0.25)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,229,255,0.4)}
+.btn-ghost{padding:13px 28px;border-radius:8px;font-weight:500;font-size:0.9rem;cursor:pointer;text-decoration:none;border:1px solid rgba(255,255,255,0.15);color:var(--text);transition:border-color 0.2s,color 0.2s}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:20px;margin-top:60px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s 0.6s ease both}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 28px;text-align:center;backdrop-filter:blur(10px);transition:border-color 0.3s,transform 0.3s}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-num{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent)}
+.stat-label{font-size:0.75rem;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace;letter-spacing:1px}
+section{position:relative;z-index:1;padding:100px 20px;max-width:1000px;margin:auto;scroll-margin-top:70px}
+.section-label{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--accent2);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px}
+h2{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;margin-bottom:50px;letter-spacing:-1px}
+h2 span{color:var(--accent)}
+.card{background:rgba(15,22,35,0.92);border:1px solid var(--border);border-radius:18px;padding:28px;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;backdrop-filter:blur(8px)}
+.card:hover{border-color:rgba(0,229,255,0.3);transform:translateY(-4px);box-shadow:var(--glow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.skill-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:14px;color:var(--text)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:'DM Mono',monospace;font-size:0.78rem;background:rgba(0,229,255,0.06);color:var(--accent);padding:5px 12px;border-radius:6px;border:1px solid rgba(0,229,255,0.08)}
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:grid;grid-template-columns:145px 1fr;gap:24px;position:relative}
+.timeline-line{display:flex;flex-direction:column;align-items:flex-end;padding-top:4px}
+.tl-year{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);text-align:right}
+.tl-company{font-size:0.72rem;color:var(--muted);text-align:right;margin-top:3px}
+.tl-body{border-left:2px solid var(--border);padding-left:28px;padding-bottom:48px;position:relative}
+.tl-body::before{content:'';position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--accent2);box-shadow:0 0 12px var(--accent2)}
+.timeline-item:last-child .tl-body{border-left-color:transparent}
+.tl-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:10px}
+.tl-body ul{list-style:none;padding:0}
+.tl-body ul li{color:var(--muted);font-size:0.88rem;line-height:1.6;padding:4px 0 4px 16px;position:relative}
+.tl-body ul li::before{content:'›';position:absolute;left:0;color:var(--accent);font-size:1rem}
+.project-card{margin-bottom:24px}
+.project-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.project-title{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800}
+.featured-badge{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;border:1px solid rgba(240,192,64,0.3);padding:4px 10px;border-radius:6px;font-weight:600}
+.project-desc{color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:20px}
+.video-container{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#000;margin-bottom:16px}
+.video-container video{display:block;width:100%}
+.dl-row{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.btn-dl{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:8px;font-size:0.82rem;font-weight:600;text-decoration:none;font-family:'DM Mono',monospace;border:1px solid rgba(0,229,255,0.25);color:var(--accent);background:rgba(0,229,255,0.06);transition:background 0.2s,border-color 0.2s}
+.btn-dl:hover{background:rgba(0,229,255,0.06);border-color:var(--accent)}
+.test-table-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-top:18px}
+table{width:100%;border-collapse:collapse}
+th{background:var(--surface2);color:var(--accent);font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:1.5px;text-transform:uppercase;padding:14px 18px}
+td{padding:14px 18px;border-bottom:1px solid var(--border);font-size:0.88rem;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+.pass-badge{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;background:rgba(0,230,118,0.1);color:var(--pass);border:1px solid rgba(0,230,118,0.25);padding:3px 10px;border-radius:6px;letter-spacing:1px}
+.failed-badge{font-family:'DM Mono',monospace;font-size:0.72rem;font-weight:700;background:rgba(255,83,112,0.1);color:var(--fail);border:1px solid rgba(255,83,112,0.25);padding:3px 10px;border-radius:6px;letter-spacing:1px}
+
+
+/* ═══ QA BACKGROUND SYSTEM ═══ */
+body { background: #040812; }
+#qa-canvas { position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0.6; }
+.hero-glow {
+  position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  width:900px;height:600px;
+  background:radial-gradient(ellipse at 50% 30%, rgba(123,97,255,0.18) 0%, rgba(0,229,255,0.08) 35%, transparent 70%);
+  z-index:-1;pointer-events:none;filter:blur(40px);
+  animation: glowPulse 4s ease-in-out infinite;
+}
+.hero-glow-2 {
+  position:fixed;bottom:-100px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(ellipse, rgba(0,229,255,0.06) 0%, transparent 70%);
+  z-index:-1;pointer-events:none;filter:blur(60px);
+  animation: glowPulse 6s ease-in-out infinite reverse;
+}
+.hero-glow-3 {
+  position:fixed;bottom:20%;left:-80px;
+  width:400px;height:400px;
+  background:radial-gradient(ellipse, rgba(123,97,255,0.05) 0%, transparent 70%);
+  z-index:-1;pointer-events:none;filter:blur(50px);
+  animation: glowPulse 5s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%,100%{opacity:0.7;transform:translateX(-50%) scale(1)}
+  50%{opacity:1;transform:translateX(-50%) scale(1.08)}
+}
+.scan-bar {
+  position:fixed;left:0;right:0;height:3px;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,transparent 0%,rgba(0,229,255,0.0) 20%,rgba(0,229,255,0.25) 50%,rgba(0,229,255,0.0) 80%,transparent 100%);
+  animation:scanDown 8s linear infinite;box-shadow:0 0 8px rgba(0,229,255,0.15),0 0 16px rgba(0,229,255,0.08);
+}
+@keyframes scanDown{0%{top:-4px;opacity:0}5%{opacity:1}90%{opacity:1}100%{top:100vh;opacity:0}}
+
+/* CODE VIEWER */
+.code-viewer{margin-top:24px;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#020917}
+.code-viewer-header{display:flex;justify-content:space-between;align-items:center;background:var(--surface2);padding:0 12px 0 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:4px}
+.code-tabs{display:flex;overflow-x:auto;gap:0;scrollbar-width:none}
+.code-tabs::-webkit-scrollbar{display:none}
+.code-tab{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);background:transparent;border:none;padding:12px 14px;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color 0.2s,border-color 0.2s}
+.code-tab:hover{color:var(--text)}
+.code-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.copy-btn{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);background:rgba(0,229,255,0.06);border:1px solid rgba(0,229,255,0.08);border-radius:6px;padding:5px 12px;cursor:pointer;white-space:nowrap;transition:color 0.2s,background 0.2s}
+.copy-btn:hover{color:var(--accent);background:rgba(0,229,255,0.06)}
+.code-body{padding:20px;max-height:420px;overflow-y:auto;overflow-x:auto}
+.code-body::-webkit-scrollbar{width:4px;height:4px}
+.code-body::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:4px}
+pre{margin:0}
+pre code{font-family:'DM Mono',monospace;font-size:0.8rem;line-height:1.7;color:#cdd6f4;white-space:pre;display:block}
+.kw{color:#cba6f7}
+.fn{color:#89b4fa}
+.st{color:#a6e3a1}
+.cm{color:#585b70;font-style:italic}
+.nb{color:#fab387}
+.dc{color:#f38ba8}
+
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.contact-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;text-align:center;transition:border-color 0.3s,transform 0.3s}
+.contact-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.contact-icon{font-size:1.8rem;margin-bottom:12px}
+.contact-card a{color:var(--text);text-decoration:none;font-size:0.9rem;font-weight:500}
+.contact-card a:hover{color:var(--accent)}
+.contact-label{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);margin-bottom:8px;letter-spacing:1px}
+footer{text-align:center;padding:40px;color:var(--muted);font-size:0.8rem;font-family:'DM Mono',monospace;border-top:1px solid var(--border);position:relative;z-index:1}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:640px){
+  nav{padding:14px 20px}
+  .nav-links{gap:14px}
+  .nav-links a{font-size:0.75rem}
+  .timeline-item{grid-template-columns:1fr}
+  .timeline-line{align-items:flex-start}
+  .tl-year,.tl-company{text-align:left}
+}
+
+/* RESUME MODAL */
+.resume-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 9999;
+  background: rgba(8, 12, 20, 0.96);
+  backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+}
+.resume-overlay.active {
+  display: flex;
+}
+.resume-box {
+  width: 90%;
+  max-width: 860px;
+  height: 88vh;
+  background: #0f1623;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 80px rgba(0, 229, 255, 0.12);
+  animation: modalIn 0.3s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #161e2e;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.resume-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: #00e5ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.resume-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: #6b7a99;
+  margin-left: 12px;
+}
+.resume-actions { display: flex; gap: 10px; align-items: center; }
+.resume-download {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;
+  text-decoration: none; font-family: 'DM Mono', monospace;
+  border: 1px solid rgba(0,229,255,0.25); color: #00e5ff;
+  background: rgba(0,229,255,0.06);
+  transition: background 0.2s;
+}
+.resume-download:hover { background: rgba(0,229,255,0.14); }
+.resume-close {
+  font-family: 'DM Mono', monospace; font-size: 0.8rem;
+  background: rgba(255,83,112,0.1); color: #ff5370;
+  border: 1px solid rgba(255,83,112,0.3); border-radius: 8px;
+  padding: 7px 18px; cursor: pointer;
+  transition: background 0.2s;
+}
+.resume-close:hover { background: rgba(255,83,112,0.22); }
+.resume-iframe {
+  flex: 1; width: 100%; border: none; background: #fff;
+}
+
+</style>
+
+<style>
+  nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 9000 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 16px 20px !important;
+    background: rgba(8,12,20,0.97) !important;
+    backdrop-filter: blur(24px) !important;
+    border-bottom: 1px solid rgba(0,229,255,0.15) !important;
+  }
+  nav .nav-links {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 36px !important;
+    margin: 0 auto !important;
+    width: auto !important;
+    text-align: center !important;
+  }
+</style>
+</head>
+<body>
+
+
+<canvas id="qa-canvas"></canvas>
+<div class="hero-glow"></div>
+<div class="hero-glow-2"></div>
+<div class="hero-glow-3"></div>
+<div class="scan-bar"></div>
+
+<nav>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+  </div>
+</nav>
+
+<header>
+  <div class="hero-badge">Available for opportunities</div>
+  <h1><span class="name-gradient">Louise Jay C. Collado</span></h1>
+  <div class="hero-sub">SOFTWARE QA ENGINEER · TESTER</div>
+  <p class="hero-desc">Ensuring software excellence through rigorous testing, automation, and a sharp eye for detail.</p>
+  <div class="cta-row">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-ghost">Get In Touch</a>
+    <button class="btn-primary" onclick="openResume()">📄 View Resume</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card"><div class="stat-num">2+</div><div class="stat-label">Years Testing</div></div>
+    <div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Projects</div></div>
+    <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">Tools Mastered</div></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-label reveal">01 · About</div>
+  <h2 class="reveal">Who I <span>Am</span></h2>
+  <div class="card reveal">
+    <p style="color:var(--muted);line-height:1.8;font-size:0.95rem">
+      Motivated IT professional with hands-on experience in mobile and web application testing. Skilled in <strong style="color:var(--text)">manual testing</strong>, test case execution, defect tracking, and ensuring UI/UX quality. Knowledgeable in automation testing using <strong style="color:var(--text)">Java, Selenium, TestNG, Python, and Pytest</strong> with experience developing <strong style="color:var(--text)">Automated test scripts</strong>. Adaptive in Agile environments and committed to delivering high-quality results. Currently seeking a part time opportunity to further enhance skills while contributing to team success.
+    </p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label reveal">02 · Skills</div>
+  <h2 class="reveal">What I <span>Do</span></h2>
+  <div class="grid">
+    <div class="card skill-card reveal">
+      <h3>🧪 Manual Testing</h3>
+      <div class="tags">
+        <span class="tag">Regression</span><span class="tag">Sanity</span><span class="tag">UI/UX</span>
+        <span class="tag">Exploratory</span><span class="tag">Functionality</span><span class="tag">Usability</span>
+        <span class="tag">UAT</span><span class="tag">Web Testing</span><span class="tag">Mobile Testing</span>
+      </div>
+    </div>
+    <div class="card skill-card reveal">
+      <h3>⚙️ Automation</h3>
+      <div class="tags">
+        <span class="tag">Selenium</span><span class="tag">Python</span><span class="tag">Pytest</span>
+        <span class="tag">TestNG</span><span class="tag">Java</span><span class="tag">Eclipse IDE</span>
+        <span class="tag">Web Automation</span>
+      </div>
+    </div>
+    <div class="card skill-card reveal">
+      <h3>🛠 Tools & Ops</h3>
+      <div class="tags">
+        <span class="tag">JIRA</span><span class="tag">Git</span><span class="tag">Postman</span>
+        <span class="tag">Google Lighthouse</span><span class="tag">Agile/Scrum</span>
+        <span class="tag">Slack</span><span class="tag">GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label reveal">03 · Experience</div>
+  <h2 class="reveal">Where I've <span>Worked</span></h2>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-line">
+        <div class="tl-year">October 2025–Present</div>
+        <div class="tl-company">GCR Consortium</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">IT Technician Support</div>
+        <ul>
+          <li>Provided technical support for hardware, software, and network issues, ensuring minimal downtime for end users.</li>
+          <li>Installed and troubleshot devices including PCs, printers, and biometric systems.</li>
+          <li>Managed user accounts and access through Microsoft and local servers.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-line">
+        <div class="tl-year">January 2025–June 2025</div>
+        <div class="tl-company">UpUp Technologies</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">QA Tester Intern</div>
+        <ul>
+          <li>Developed and executed comprehensive test cases to validate software functionality against user requirements.</li>
+          <li>Conducted manual testing — functional, regression, end-to-end, and exploratory — to identify bugs and verify fixes.</li>
+          <li>Utilized Selenium WebDriver for basic automation testing to streamline regression scenarios.</li>
+          <li>Collaborated with developers using JIRA, Google Sheets, and Slack; participated in daily stand-ups and sprint reviews.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="timeline-line">
+        <div class="tl-year">March 2023–January 2026</div>
+        <div class="tl-company">Freelance</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-title">Freelance QA Tester</div>
+        <ul>
+          <li>Performed functionality, integration, and unit testing for mobile and web applications.</li>
+          <li>Conducted performance testing using Google Lighthouse to identify speed and optimization issues.</li>
+          <li>Executed cross-platform testing to validate usability and responsiveness across devices.</li>
+          <li>Collaborated with clients to document defects, provide test reports, and suggest improvements.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label reveal">04 · Projects</div>
+  <h2 class="reveal">My <span>Work</span></h2>
+
+  <!-- Project 1: Earlee -->
+  <div class="card project-card reveal">
+    <div class="project-header">
+      <div class="project-title">Earlee Payroll Web & App</div>
+      <div class="featured-badge">★ FEATURED</div>
+    </div>
+    <p class="project-desc">Executed hybrid QA testing (automation + manual) for the Earlee Payroll system. Automated critical workflows such as login and leave requests, while performing exploratory and regression testing to uncover defects and provide clear bug reproduction recordings for developers.</p>
+    <div class="Image-container">
+      <img src="Earlee.png" alt="Earlee Payroll" style="width:100%;height:auto;border-radius:10px;margin-bottom:12px;">
+    </div>
+    <div class="video-container">
+      <video controls><source src="Copy of Automation.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+    </div>
+    <div class="dl-row">
+      <a href="Earlee Testing.xlsx" download class="btn-dl">📊 Test Cases (.xlsx)</a>
+    </div>
+    <div class="test-table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Test Scenario</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-101</td><td>Invalid Email and Password</td><td><span class="pass-badge">PASS</span></td></tr>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-102</td><td>Parallel Session Login Attempt</td><td><span class="pass-badge">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Project 2: Impak -->
+  <div class="card project-card reveal">
+    <div class="project-header">
+      <div class="project-title">Impak Web & App</div>
+      <div class="featured-badge">★ FEATURED</div>
+    </div>
+    <p class="project-desc">Led end-to-end QA testing using both automation and manual approaches for survey workflows and core system features. Automated key test cases while performing exploratory and functional testing to identify and document defects with precise reproduction steps.</p>
+    <div class="Image-container">
+      <img src="IMPAK (2).png" alt="Impak App" style="width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+    </div>
+    <div class="video-container">
+      <video controls style="width:300px;height:500px;display:block;margin:auto;">
+        <source src="Org Culture Time Field.mp4" type="video/mp4">Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="dl-row">
+      <a href="IMPAK Frameworks Test Sheets (Compiled).xlsx" download class="btn-dl">📊 Test Cases (.xlsx)</a>
+      <a href="IMPAK_Automation-main.zip" download class="btn-dl">⬇️ Automation Scripts (.zip)</a>
+    </div>
+
+    <!-- Automation Code Viewer -->
+    <div class="code-viewer">
+      <div class="code-viewer-header">
+        <div class="code-tabs">
+          <button class="code-tab active" onclick="switchTab('conftest',this)">conftest.py</button>
+          <button class="code-tab" onclick="switchTab('locators',this)">universal_locators.py</button>
+          <button class="code-tab" onclick="switchTab('test_signup',this)">test_signup.py</button>
+          <button class="code-tab" onclick="switchTab('test_login',this)">test_login.py</button>
+          <button class="code-tab" onclick="switchTab('test_workspace',this)">test_create_workspace.py</button>
+          <button class="code-tab" onclick="switchTab('test_employee',this)">test_add_employee.py</button>
+          <button class="code-tab" onclick="switchTab('test_department',this)">test_add_department.py</button>
+          <button class="code-tab" onclick="switchTab('test_group',this)">test_add_group.py</button>
+          <button class="code-tab" onclick="switchTab('test_survey',this)">test_add_survey.py</button>
+        </div>
+        <button class="copy-btn" id="copy-btn" onclick="copyCode()">📋 Copy</button>
+      </div>
+      <div class="code-body">
+        <pre><code id="code-content"></code></pre>
+      </div>
+    </div>
+
+    <div class="test-table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Test Scenario</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-101</td><td>Org Culture Time Field</td><td><span class="failed-badge">FAILED</span></td></tr>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-102</td><td>Date and Time Not Working</td><td><span class="failed-badge">FAILED</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Project 3: Tidee -->
+  <div class="card project-card reveal">
+    <div class="project-header">
+      <div class="project-title">Tidee & Tidee Cleaner App</div>
+      <div class="featured-badge">★ FEATURED</div>
+    </div>
+    <p class="project-desc">Performed thorough manual QA testing for the TIDEE platform, focusing on login authentication, email validation, and payment gateway workflows for cleaner booking and scheduling.</p>
+    <div class="Image-container">
+      <img src="tideee.jpg" alt="Tidee App" style="width:250px;height:500px;display:block;margin:auto;border-radius:10px;margin-bottom:12px;">
+    </div>
+    <div class="video-container">
+      <video controls style="width:300px;height:500px;display:block;margin:auto;">
+        <source src="Reset password not sending email.mp4" type="video/mp4">Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="dl-row">
+      <a href="TIDEE.xlsx" download class="btn-dl">📊 Test Cases (.xlsx)</a>
+    </div>
+    <div class="test-table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Test Scenario</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-101</td><td>Payment Gateway Session</td><td><span class="pass-badge">PASS</span></td></tr>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-102</td><td>Date and Time Not Working</td><td><span class="failed-badge">FAILED</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Project 4: KembaQ -->
+  <div class="card project-card reveal">
+    <div class="project-header">
+      <div class="project-title">KembaQ Web</div>
+      <div class="featured-badge">★ FEATURED</div>
+    </div>
+    <p class="project-desc">Performed comprehensive manual QA testing for the Kembaq platform, focusing on marketing workflow creation, voucher availment, and UI/UX validation.</p>
+    <div class="video-container">
+      <video controls><source src="Create Marketing have error.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+    </div>
+    <div class="dl-row">
+      <a href="KembaQ Testing.xlsx" download class="btn-dl">📊 Test Cases (.xlsx)</a>
+    </div>
+    <div class="test-table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Test Scenario</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-101</td><td>Creating Shop Voucher</td><td><span class="pass-badge">PASS</span></td></tr>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-102</td><td>UI/UX and Wrong Text Display</td><td><span class="failed-badge">FAILED</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Project 5: GetHired -->
+  <div class="card project-card reveal">
+    <div class="project-header">
+      <div class="project-title">GetHired Web & App</div>
+      <div class="featured-badge">★ FEATURED</div>
+    </div>
+    <p class="project-desc">Performed comprehensive manual QA testing for web and mobile applications, validating job application workflows, core features, and UI/UX. Applied negative and stress testing techniques on file uploads, ensuring system robustness through detailed defect identification.</p>
+    <div class="video-container">
+      <video controls><source src="can't see the video when I start the record.mp4" type="video/mp4">Your browser does not support the video tag.</video>
+    </div>
+    <div class="video-container">
+      <video controls style="width:300px;height:500px;display:block;margin:auto;">
+        <source src="failed to upload a video.mp4" type="video/mp4">Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="dl-row">
+      <a href="GetHired.xlsx" download class="btn-dl">📊 Test Cases (.xlsx)</a>
+    </div>
+    <div class="test-table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Test Scenario</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-101</td><td>Video Recorder Not Showing</td><td><span class="failed-badge">FAILED</span></td></tr>
+          <tr><td style="color:var(--text);font-family:'DM Mono',monospace;font-size:0.8rem">QA-102</td><td>Failed to Upload a Video</td><td><span class="failed-badge">FAILED</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label reveal">05 · Contact</div>
+  <h2 class="reveal">Let's <span>Connect</span></h2>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <div class="contact-icon">✉️</div>
+      <div class="contact-label">Email</div>
+      <a href="/cdn-cgi/l/email-protection#ddb1b2a8b4aeb8beb2b1b1bcb9b2efee9dbab0bcb4b1f3beb2b0" target="blank">Louisecollado23@gmail.com</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">💼</div>
+      <div class="contact-label">LinkedIn</div>
+      <a href="https://linkedin.com/in/louise-jay-collado" target="_blank">Louise-Jay-Collado</a>
+    </div>
+    <div class="contact-card reveal">
+      <div class="contact-icon">📋</div>
+      <div class="contact-label">Indeed</div>
+      <a href="https://profile.indeed.com/" target="_blank">Louise-Jay-Collado</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Louise Jay Collado · Software Quality Assurance Engineer</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+
+</script><script>
+const scripts = {
+  conftest: `import pytest\nfrom selenium import webdriver\n\n@pytest.fixture(scope="session")\ndef driver():\n    driver = webdriver.Chrome()\n    driver.maximize_window()\n    yield driver\n    # driver.quit()\n\n@pytest.fixture(scope="session")\ndef temp_email_store():\n    return {}  # Dictionary to store shared values`,
+
+  locators: `from selenium.webdriver.common.by import By\n\nclass Locators:\n    # URLs\n    IMPAK_URL = "https://impak.app/login"\n    TEMP_MAIL_URL = "https://temp-mail.io/en"\n    IMPAK_DASHBOARD_URL = "https://impak.app/dashboard"\n\n    # SIGNUP LOCATORS\n    SIGNUP_FIRST_NAME_INPUT = (By.ID, "first_name")\n    SIGNUP_LAST_NAME_INPUT = (By.ID, "last_name")\n    SIGNUP_EMAIL_INPUT = (By.ID, "email")\n    SIGNUP_PASSWORD_INPUT = (By.ID, "password")\n    SIGNUP_CONFIRM_PASSWORD_INPUT = (By.ID, "password_confirmation")\n    SIGNUP_TERMS_CHECKBOX = (By.ID, "terms")\n    SIGNUP_BUTTON = (By.XPATH, "//button[contains(text(), 'Sign Up')]")\n    SIGNUP_LINK_BUTTON = (By.XPATH, "//a[text()='Sign Up']")\n    LOGOUT_LINK_BUTTON = (By.XPATH, "//button[contains(text(), 'Log Out')]")\n    TEMP_MAIL_EMAIL = (By.ID, "email")\n\n    # LOGIN LOCATORS\n    LOGIN_EMAIL = (By.ID, "email")\n    LOGIN_PASSWORD = (By.ID, "password")\n    LOGIN_BUTTON = (By.XPATH, "//button[contains(text(), 'Sign in')]")\n    LOGIN_ERROR_MESSAGE = (By.XPATH, "//div[contains(text(),'Whoops! Something went wrong.')]")\n\n    # Default test values\n    SIGNUP_FIRST_NAME_VALUE = "For"\n    SIGNUP_LAST_NAME_VALUE = "Testing"\n    SIGNUP_PASSWORD_VALUE = "Password123"\n\n    # CREATE WORKSPACE LOCATORS\n    COMPANY_NAME_FIELD = (By.ID, "company")\n    COMPANY_CREATE_BTN = (By.XPATH, "//button[normalize-space(text())='Create']")\n    CHOOSE_WORKSPACE = (By.XPATH, "//a[contains(text(), 'Open')]")\n\n    # ADD EMPLOYEE LOCATORS\n    MODAL = (By.ID, "feedback-modal")\n    MODAL_CLOSE = (By.XPATH, "//div[@id='feedback-modal']//button[contains(@class, 'text-slate-400')]")\n    ADD_YOUR_EMPLOYEES = (By.XPATH, "//div[@class='flex items-center' and .//h3[text()='Add your employees']]")\n    EMPLOYEE_EMAIL_FIELD = (By.CSS_SELECTOR, "input[type='email'][wire:model='invites.0.email']")\n    EMPLOYEE_FIRSTNAME_FIELD = (By.CSS_SELECTOR, "input[type='text'][wire:model='invites.0.first_name']")\n    EMPLOYEE_LASTNAME_FIELD = (By.CSS_SELECTOR, "input[type='text'][wire:model='invites.0.last_name']")\n    EMPLOYEE_INVITE_BTN = (By.XPATH, "//button[@type='submit' and normalize-space(text())='Invite']")\n    SUCCESS_ADD_MESSAGE = (By.XPATH, "//h2[contains(@class, 'swal2-title')]")\n    EMPLOYEE_EMAIL_VALUE = "test@abc.com"\n    EMPLOYEE_FIRSTNAME_VALUE = "Random"\n    EMPLOYEE_LASTNAME_VALUE = "Testing"\n\n    # ADD SURVEY LOCATORS\n    SIDEBAR_SURVEYS = (By.XPATH, "//a[@href='#0' and contains(., 'Surveys')]")\n    SIDEBAR_ONGOING = (By.XPATH, "//span[text()='Ongoing']")\n    CREATE_SURVEY_BTN = (By.XPATH, "//button[span[text()='Create Survey']]")\n    SURVEY_OPTION = (By.XPATH, "//a[@href='/frameworks']")\n    ONBOARD_BTN = (By.XPATH, "//button[div[text()='ONBOARD']]")\n    USE_BTN = (By.XPATH, "//a[normalize-space(text())='Use']")\n    SETUP_BTN = (By.XPATH, "//h1[contains(., '1. Setup')]")\n    SURVEY_NAME = (By.ID, "name")\n    SUBMISSION = (By.ID, "countAllowedSubmissions")\n    RESPONDENTS_BTN = (By.XPATH, "//h1[contains(., '2. Respondents')]")\n    TOGGLE_PUBLIC = (By.XPATH, "//div[@class='w-10 h-4 bg-gray-400 rounded-full shadow-inner']")\n    PUBLISH_BTN = (By.XPATH, "//button[contains(., 'Publish')]")\n    PUBLISH_CONFIRM_BTN = (By.XPATH, "//button[contains(., 'Yes')]")\n    MARK_AS_DONE_BTN = (By.XPATH, "//button[contains(., 'Mark as Completed')]")\n    SURVEY_NAME_VALUE = "Test Survey"\n    SUBMISSION_VALUE = "5"\n\n    # GROUP LOCATORS\n    SIDEBAR_COMMUNITY = (By.XPATH, "//a[.//span[text()='Community']]")\n    SIDEBAR_GROUPS = (By.XPATH, "//a[span[normalize-space(text())='Groups']]")\n    CREATE_GROUP_BUTTON = (By.XPATH, "//button[@class='btn bg-indigo-500 hover:bg-indigo-600 text-white' and @aria-controls='feedback-modal']")\n    GROUP_NAME_INPUT_FIELD = (By.ID, "first_name")\n    GROUP_LEADER_DROPDOWN = (By.XPATH, "//span[text()='Select a user']")\n    GROUP_LEADER_DROPDOWN_OPTION = (By.CSS_SELECTOR, "button[tabindex='1']")\n    ADD_NEW_GROUP_BUTTON = (By.XPATH, "//button[text()='Add New']")\n    TEST_ADD_GROUP = (By.XPATH, "//h2[text()='Testing Group']")\n    GROUP_NAME = "Testing Group"\n\n    # DEPARTMENT LOCATORS\n    ADD_YOUR_DEPT = (By.XPATH, "//div[@class='flex items-center' and .//h3[text()='Create your departments']]")\n    SIDEBAR_DEPARTMENTS = (By.XPATH, "//a[span[normalize-space(text())='Departments']]")\n    CREATE_BUTTON = (By.XPATH, "//button[@class='btn bg-indigo-500 hover:bg-indigo-600 text-white' and @aria-controls='feedback-modal']")\n    DEPARTMENT_NAME_INPUT_FIELD = (By.ID, "first_name")\n    DEPARTMENT_HEAD_DROPDOWN = (By.XPATH, "//span[text()='Select a user']")\n    DEPARTMENT_HEAD_DROPDOWN_OPTION = (By.CSS_SELECTOR, "button[tabindex='1']")\n    ADD_NEW_DEPARTMENT_BUTTON = (By.XPATH, "//button[text()='Add New']")\n    TEST_ADD_DEPT = (By.XPATH, "//h2[text()='Testing Department']")\n    DEPARTMENT_NAME = "Testing Department"`,
+
+  test_signup: `import logging\nimport time\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\nfrom selenium.common.exceptions import TimeoutException\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(1)\ndef test_signup(driver, temp_email_store):\n\n    driver.get(Locators.IMPAK_URL)\n    wait = WebDriverWait(driver, 10)\n\n    try:\n        signup_link = wait.until(EC.element_to_be_clickable(Locators.SIGNUP_LINK_BUTTON))\n        assert signup_link.is_displayed(), "Sign up link is not visible."\n        assert signup_link.is_enabled(), "Sign up link button is not clickable"\n        signup_link.click()\n\n        main_tab = driver.current_window_handle\n        driver.execute_script("window.open('');")\n        driver.switch_to.window(driver.window_handles[1])\n        driver.get(Locators.TEMP_MAIL_URL)\n        time.sleep(10)\n\n        temp_email_field = wait.until(EC.presence_of_element_located(Locators.TEMP_MAIL_EMAIL))\n        temp_email = temp_email_field.get_attribute("value")\n        temp_email_store["email"] = temp_email\n\n        driver.switch_to.window(main_tab)\n\n        firstname_field = wait.until(EC.visibility_of_element_located(Locators.SIGNUP_FIRST_NAME_INPUT))\n        firstname_field.send_keys(Locators.SIGNUP_FIRST_NAME_VALUE)\n\n        lastname_field = wait.until(EC.visibility_of_element_located(Locators.SIGNUP_LAST_NAME_INPUT))\n        lastname_field.send_keys(Locators.SIGNUP_LAST_NAME_VALUE)\n\n        email_field = wait.until(EC.visibility_of_element_located(Locators.SIGNUP_EMAIL_INPUT))\n        email_field.send_keys(temp_email)\n\n        email_value = email_field.get_attribute("value")\n        assert temp_email == email_value, "Email do not match"\n\n        password_field = wait.until(EC.visibility_of_element_located(Locators.SIGNUP_PASSWORD_INPUT))\n        password_field.send_keys(Locators.SIGNUP_PASSWORD_VALUE)\n\n        confirmpass_field = wait.until(EC.visibility_of_element_located(Locators.SIGNUP_CONFIRM_PASSWORD_INPUT))\n        confirmpass_field.send_keys(Locators.SIGNUP_PASSWORD_VALUE)\n\n        password_value = password_field.get_attribute("value")\n        confirmpass_value = confirmpass_field.get_attribute("value")\n        assert password_value == confirmpass_value, "Password and Confirm Password do not match."\n\n        checkbox = wait.until(EC.element_to_be_clickable(Locators.SIGNUP_TERMS_CHECKBOX))\n        checkbox.click()\n\n        signup_button = wait.until(EC.element_to_be_clickable(Locators.SIGNUP_BUTTON))\n        assert signup_button.is_enabled(), "Sign up button is not clickable"\n        signup_button.click()\n\n        assert driver.current_url.startswith(Locators.IMPAK_DASHBOARD_URL), "Did not redirect to dashboard"\n\n        logout_button = wait.until(EC.element_to_be_clickable(Locators.LOGOUT_LINK_BUTTON))\n        logout_button.click()\n        time.sleep(2)\n        assert driver.current_url == Locators.IMPAK_URL, "Not redirected to login after logout"\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_login: `import logging\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(2)\ndef test_login(driver, temp_email_store):\n\n    wait = WebDriverWait(driver, 10)\n\n    try:\n        temp_email = temp_email_store.get("email")\n        assert temp_email is not None, "Temp email not found in store"\n\n        login_email = wait.until(EC.visibility_of_element_located(Locators.LOGIN_EMAIL))\n        assert login_email.is_displayed(), "Login email field is not visible"\n        login_email.send_keys(temp_email)\n\n        login_email_value = login_email.get_attribute("value")\n        assert temp_email == login_email_value, "Email do not match"\n\n        login_password = wait.until(EC.visibility_of_element_located(Locators.LOGIN_PASSWORD))\n        assert login_password.is_displayed(), "Login password field is not visible"\n        login_password.send_keys(Locators.SIGNUP_PASSWORD_VALUE)\n\n        login_button = wait.until(EC.element_to_be_clickable(Locators.LOGIN_BUTTON))\n        assert login_button.is_enabled(), "Login button is not clickable"\n        login_button.click()\n\n        if driver.current_url != Locators.IMPAK_DASHBOARD_URL:\n            error_message = wait.until(EC.visibility_of_element_located(Locators.LOGIN_ERROR_MESSAGE))\n            assert error_message.is_displayed(), "Error message not displayed"\n            logging.error("Login failed error occurred while logging in.")\n        else:\n            assert driver.current_url.startswith(Locators.IMPAK_DASHBOARD_URL), "Login successful"\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_workspace: `import logging\nimport random\nimport string\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\ndef generate_random_company_name():\n    prefix = "Test"\n    suffix = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))\n    return f"{prefix}_{suffix}"\n\n@pytest.mark.order(3)\ndef test_create_workspace(driver):\n\n    wait = WebDriverWait(driver, 10)\n    random_company_name = generate_random_company_name()\n    logging.info(f"Generated Company Name: {random_company_name}")\n\n    try:\n        company_name_field = wait.until(EC.visibility_of_element_located(Locators.COMPANY_NAME_FIELD))\n        assert company_name_field.is_displayed(), "Company name field not displayed"\n        company_name_field.send_keys(random_company_name)\n\n        create_btn = wait.until(EC.visibility_of_element_located(Locators.COMPANY_CREATE_BTN))\n        assert create_btn.is_enabled(), "Create button not clickable"\n        create_btn.click()\n\n        choose_workspace = wait.until(EC.visibility_of_element_located(Locators.CHOOSE_WORKSPACE))\n        assert choose_workspace.is_displayed(), "Open button not displayed"\n        assert choose_workspace.is_enabled(), "Open button not clickable"\n        choose_workspace.click()\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_employee: `import logging\nimport time\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(4)\ndef test_add_employee(driver):\n\n    wait = WebDriverWait(driver, 20)\n\n    try:\n        wait.until(EC.element_to_be_clickable(Locators.ADD_YOUR_EMPLOYEES)).click()\n        wait.until(EC.visibility_of_element_located(Locators.MODAL))\n\n        email_input_field = wait.until(EC.visibility_of_element_located(Locators.EMPLOYEE_EMAIL_FIELD))\n        assert email_input_field.is_displayed(), "email field is not visible"\n        email_input_field.send_keys(Locators.EMPLOYEE_EMAIL_VALUE)\n        time.sleep(1)\n\n        fname_input_field = wait.until(EC.visibility_of_element_located(Locators.EMPLOYEE_FIRSTNAME_FIELD))\n        assert fname_input_field.is_displayed(), "First name field is not visible"\n        fname_input_field.send_keys(Locators.EMPLOYEE_FIRSTNAME_VALUE)\n        time.sleep(1)\n\n        lname_input_field = wait.until(EC.visibility_of_element_located(Locators.EMPLOYEE_LASTNAME_FIELD))\n        assert lname_input_field.is_displayed(), "Last name field is not visible"\n        lname_input_field.send_keys(Locators.EMPLOYEE_LASTNAME_VALUE)\n        time.sleep(2)\n\n        invite_button = wait.until(EC.element_to_be_clickable(Locators.EMPLOYEE_INVITE_BTN))\n        assert invite_button.is_enabled(), "Invite button is not clickable"\n        invite_button.click()\n        time.sleep(2)\n\n        success_message = wait.until(EC.presence_of_element_located(Locators.SUCCESS_ADD_MESSAGE))\n        assert success_message.is_displayed(), "Success message is not displayed"\n        assert "Employees invited!" in success_message.text, "Employee not added successfully"\n\n        close_modal_button = wait.until(EC.element_to_be_clickable(Locators.MODAL_CLOSE))\n        close_modal_button.click()\n        time.sleep(2)\n        driver.refresh()\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_department: `import logging\nimport time\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(5)\ndef test_add_department(driver):\n    wait = WebDriverWait(driver, 20)\n\n    try:\n        wait.until(EC.visibility_of_element_located(Locators.ADD_YOUR_DEPT)).click()\n        wait.until(EC.visibility_of_element_located(Locators.CREATE_BUTTON)).click()\n        wait.until(EC.visibility_of_element_located(Locators.MODAL))\n\n        department_name_input = wait.until(EC.presence_of_element_located(Locators.DEPARTMENT_NAME_INPUT_FIELD))\n        department_name_input.send_keys(Locators.DEPARTMENT_NAME)\n        time.sleep(1)\n\n        wait.until(EC.presence_of_element_located(Locators.DEPARTMENT_HEAD_DROPDOWN)).click()\n        time.sleep(1)\n\n        wait.until(EC.presence_of_element_located(Locators.DEPARTMENT_HEAD_DROPDOWN_OPTION)).click()\n        time.sleep(2)\n\n        wait.until(EC.visibility_of_element_located(Locators.ADD_NEW_DEPARTMENT_BUTTON)).click()\n\n        testing_dept = wait.until(EC.presence_of_element_located(Locators.TEST_ADD_DEPT))\n        assert testing_dept.is_displayed(), "Department is not added"\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_group: `import logging\nimport time\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(6)\ndef test_add_group(driver):\n    wait = WebDriverWait(driver, 20)\n\n    try:\n        wait.until(EC.element_to_be_clickable(Locators.SIDEBAR_GROUPS)).click()\n        wait.until(EC.element_to_be_clickable(Locators.CREATE_GROUP_BUTTON)).click()\n\n        group_name_input = wait.until(EC.presence_of_element_located(Locators.GROUP_NAME_INPUT_FIELD))\n        group_name_input.send_keys(Locators.GROUP_NAME)\n        time.sleep(1)\n\n        wait.until(EC.visibility_of_element_located(Locators.GROUP_LEADER_DROPDOWN)).click()\n        time.sleep(1)\n\n        wait.until(EC.visibility_of_element_located(Locators.GROUP_LEADER_DROPDOWN_OPTION)).click()\n        time.sleep(2)\n\n        wait.until(EC.element_to_be_clickable(Locators.ADD_NEW_GROUP_BUTTON)).click()\n\n        test_group = wait.until(EC.visibility_of_element_located(Locators.TEST_ADD_GROUP))\n        assert test_group.is_displayed(), "Group is not added"\n\n        wait.until(EC.element_to_be_clickable(Locators.SIDEBAR_COMMUNITY)).click()\n        time.sleep(1)\n\n    except Exception as e:\n        logging.exception(f"Exception occurred: {str(e)}")\n        raise`,
+
+  test_survey: `import logging\nimport pytest\nfrom pages.universal_locators import Locators\nfrom selenium.webdriver.support.ui import WebDriverWait\nfrom selenium.webdriver.support import expected_conditions as EC\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\n\n@pytest.mark.order(7)\ndef test_add_survey(driver):\n\n    wait = WebDriverWait(driver, 20)\n\n    try:\n        survey = driver.find_element(*Locators.SIDEBAR_SURVEYS)\n        survey.click()\n\n        wait.until(EC.visibility_of_element_located(Locators.SIDEBAR_ONGOING)).click()\n        wait.until(EC.visibility_of_element_located(Locators.CREATE_SURVEY_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.SURVEY_OPTION)).click()\n        wait.until(EC.visibility_of_element_located(Locators.MODAL))\n        wait.until(EC.visibility_of_element_located(Locators.MODAL_CLOSE)).click()\n        wait.until(EC.visibility_of_element_located(Locators.ONBOARD_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.USE_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.SETUP_BTN)).click()\n\n        survey_name = wait.until(EC.visibility_of_element_located(Locators.SURVEY_NAME))\n        assert survey_name.is_enabled(), "Survey name field not working"\n        survey_name.send_keys(Locators.SURVEY_NAME_VALUE)\n\n        submission = wait.until(EC.visibility_of_element_located(Locators.SUBMISSION))\n        submission.clear()\n        assert submission.is_enabled(), "No of submission field not working"\n        submission.send_keys(Locators.SUBMISSION_VALUE)\n\n        wait.until(EC.visibility_of_element_located(Locators.SETUP_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.RESPONDENTS_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.TOGGLE_PUBLIC)).click()\n        wait.until(EC.visibility_of_element_located(Locators.RESPONDENTS_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.PUBLISH_BTN)).click()\n        wait.until(EC.visibility_of_element_located(Locators.PUBLISH_CONFIRM_BTN)).click()\n\n        mark_as_done_btn = wait.until(EC.visibility_of_element_located(Locators.MARK_AS_DONE_BTN))\n        assert mark_as_done_btn.is_displayed(), "Survey not created"\n\n    except Exception as e:\n        try:\n            iframe = driver.find_element("tag name", "iframe")\n            driver.switch_to.frame(iframe)\n            iframe_content = driver.page_source\n            driver.switch_to.default_content()\n            if "SERVER ERROR 500" in iframe_content or "Server Error" in iframe_content:\n                msg = "Server Error 500 encountered."\n                logging.error(msg)\n                pytest.fail(msg)\n        except Exception as iframe_error:\n            logging.warning(f"Could not inspect iframe content: {iframe_error}")\n        msg = f"Unexpected exception occurred: {str(e)}"\n        logging.exception(msg)\n        pytest.fail(msg)`
+};
+
+let currentTab = 'conftest';
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function highlightPython(code) {
+  let e = escapeHtml(code);
+  // Comments first (before other replacements)
+  e = e.replace(/(#[^\n]*)/g, '<span class="cm">$1</span>');
+  // Decorators
+  e = e.replace(/(@\w+)/g, '<span class="dc">$1</span>');
+  // Strings (double and single quoted)
+  e = e.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '<span class="st">$1</span>');
+  // Keywords
+  ['import','from','def','class','return','if','else','elif','try','except','assert','and','or','not','in','is','None','True','False','raise','with','as','for','while','yield','pass','break','continue','lambda','global','nonlocal'].forEach(kw => {
+    e = e.replace(new RegExp('\\b(' + kw + ')\\b', 'g'), '<span class="kw">$1</span>');
+  });
+  // Builtins
+  e = e.replace(/\b(print|len|range|str|int|dict|list|tuple|set|type|isinstance|hasattr|getattr|open|super)\b/g, '<span class="nb">$1</span>');
+  return e;
+}
+
+function switchTab(key, btn) {
+  currentTab = key;
+  document.getElementById('code-content').innerHTML = highlightPython(scripts[key]);
+  document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const cb = document.getElementById('copy-btn');
+  if (cb) cb.textContent = '📋 Copy';
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(scripts[currentTab]).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy'; }, 2000);
+  });
+}
+
+// Init
+switchTab('conftest', null);
+
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = (i % 4) * 0.07 + 's';
+  obs.observe(el);
+});
+</script>
+
+<!-- RESUME MODAL -->
+<div class="resume-overlay" id="resumeOverlay" onclick="handleOverlayClick(event)">
+  <div class="resume-box" id="resumeBox">
+    <div class="resume-header">
+      <div>
+        <span class="resume-title">📄 Resume</span>
+        <span class="resume-name">Louise Jay C. Collado</span>
+      </div>
+      <div class="resume-actions">
+        <a href="LouiseCollado_Resume Part Time.pdf" download class="resume-download">⬇️ Download</a>
+        <button class="resume-close" onclick="closeResume()">✕ Close</button>
+      </div>
+    </div>
+    <iframe class="resume-iframe" src="LouiseCollado_Resume Part Time.pdf#toolbar=1"></iframe>
+  </div>
+</div>
+
+<script>
+function openResume() {
+  document.getElementById('resumeOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeResume() {
+  document.getElementById('resumeOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('resumeOverlay')) closeResume();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeResume();
+});
+</script>
+
+
+<script>
+(function(){
+  const C = document.getElementById('qa-canvas');
+  if(!C) return;
+  const X = C.getContext('2d');
+  let W, H;
+
+  function resize(){ W = C.width = window.innerWidth; H = C.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // QA Keywords that float up
+  const WORDS = [
+    'def test_login()', 'assert status == 200', '@pytest.fixture',
+    'PASS ✓', 'FAIL ✗', 'selenium.webdriver', 'WebDriverWait',
+    'By.XPATH', 'By.CSS_SELECTOR', 'EC.element_to_be_clickable',
+    'driver.find_element', 'test_add_survey()', 'conftest.py',
+    'regression', 'sanity check', 'QA-101', 'QA-102',
+    'bug report', 'test case', 'defect found', 'UAT',
+    '.send_keys()', '.click()', 'assert True', 'pytest -v',
+    'exploratory', 'JIRA ticket', 'driver.get(url)',
+    'Expected: PASS', 'time.sleep(2)', 'import pytest',
+  ];
+
+  const COLS = ['#00e5ff','#7b61ff','#4ade80','#f0c040','#00e5ff','#a78bfa'];
+
+  // Create particles
+  const particles = Array.from({length: 45}, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight + window.innerHeight,
+    word: WORDS[Math.floor(Math.random() * WORDS.length)],
+    speed: 0.3 + Math.random() * 0.7,
+    opacity: 0.02 + Math.random() * 0.03,
+    size: 11 + Math.floor(Math.random() * 6),
+    drift: (Math.random() - 0.5) * 0.3,
+    color: COLS[Math.floor(Math.random() * COLS.length)],
+    delay: Math.random() * 300,
+  }));
+
+  // Grid dots
+  const GCOLS = 32, GROWS = 20;
+  
+  // Circuit nodes  
+  const nodes = Array.from({length: 12}, () => ({
+    x: Math.floor(Math.random() * GCOLS),
+    y: Math.floor(Math.random() * GROWS),
+    pulsePhase: Math.random() * Math.PI * 2,
+    pulseSpeed: 0.02 + Math.random() * 0.03,
+    size: 2 + Math.random() * 3,
+    color: Math.random() > 0.5 ? '#00e5ff' : '#7b61ff',
+  }));
+
+  // Horizontal progress bars (like test runners)
+  const bars = Array.from({length: 6}, () => ({
+    y: Math.random() * window.innerHeight,
+    width: 60 + Math.random() * 200,
+    x: Math.random() * window.innerWidth,
+    speed: 0.5 + Math.random() * 1.5,
+    opacity: 0.02 + Math.random() * 0.03,
+    color: Math.random() > 0.5 ? '#00e5ff' : '#7b61ff',
+    progress: Math.random(),
+  }));
+
+  let frame = 0;
+
+  function hex2rgb(hex){ return [parseInt(hex.slice(1,3),16),parseInt(hex.slice(3,5),16),parseInt(hex.slice(5,7),16)]; }
+
+  function draw(){
+    X.clearRect(0,0,W,H);
+    frame++;
+
+    const gw = W / GCOLS, gh = H / GROWS;
+
+    // ── 1. Dot grid with wave pulse ──
+    for(let c=0;c<=GCOLS;c++){
+      for(let r=0;r<=GROWS;r++){
+        const wave = Math.sin(frame*0.018 + c*0.5 + r*0.4) * 0.5 + 0.5;
+        const dist = Math.hypot(c - GCOLS/2, r - GROWS*0.2) / (GCOLS * 0.7);
+        const op = (0.015 + wave * 0.03) * Math.max(0, 1 - dist * 1.2);
+        if(op < 0.01) continue;
+        X.beginPath();
+        X.arc(c*gw, r*gh, 1.2, 0, Math.PI*2);
+        X.fillStyle = `rgba(0,229,255,${op.toFixed(3)})`;
+        X.fill();
+      }
+    }
+
+    // ── 2. Grid lines ──
+    X.lineWidth = 0.5;
+    for(let c=0;c<=GCOLS;c++){
+      const op = 0.008 + 0.005*Math.sin(frame*0.01+c*0.3);
+      X.strokeStyle = `rgba(0,229,255,${op})`;
+      X.beginPath(); X.moveTo(c*gw,0); X.lineTo(c*gw,H); X.stroke();
+    }
+    for(let r=0;r<=GROWS;r++){
+      const op = 0.008 + 0.005*Math.sin(frame*0.01+r*0.3);
+      X.strokeStyle = `rgba(123,97,255,${op})`;
+      X.beginPath(); X.moveTo(0,r*gh); X.lineTo(W,r*gh); X.stroke();
+    }
+
+    // ── 3. Circuit nodes (glowing dots at grid intersections) ──
+    nodes.forEach(n => {
+      n.pulsePhase += n.pulseSpeed;
+      const pulse = 0.5 + 0.5*Math.sin(n.pulsePhase);
+      const px = n.x * gw, py = n.y * gh;
+      const rgb = hex2rgb(n.color);
+      // outer glow
+      const grad = X.createRadialGradient(px,py,0,px,py,n.size*4);
+      grad.addColorStop(0, `rgba(${rgb},${(0.06*pulse).toFixed(2)})`);
+      grad.addColorStop(1, `rgba(${rgb},0)`);
+      X.beginPath(); X.arc(px,py,n.size*4,0,Math.PI*2);
+      X.fillStyle = grad; X.fill();
+      // core dot
+      X.beginPath(); X.arc(px,py,n.size*pulse,0,Math.PI*2);
+      X.fillStyle = n.color + Math.floor((0.12+0.08*pulse)*255).toString(16).padStart(2,'0');
+      X.fill();
+    });
+
+    // ── 4. Horizontal test-runner bars ──
+    bars.forEach(b => {
+      b.progress += b.speed / b.width;
+      if(b.progress > 1){ 
+        b.progress=0; b.y=Math.random()*H;
+        b.x=Math.random()*W; b.width=60+Math.random()*200;
+      }
+      const ex = b.x + b.width * b.progress;
+      const grad = X.createLinearGradient(b.x,b.y,ex,b.y);
+      grad.addColorStop(0,b.color+'00');
+      grad.addColorStop(0.5,b.color+Math.floor(b.opacity*255).toString(16).padStart(2,'0'));
+      grad.addColorStop(1,b.color+'ff');
+      X.lineWidth=1.5; X.strokeStyle=grad;
+      X.beginPath(); X.moveTo(b.x,b.y); X.lineTo(ex,b.y); X.stroke();
+      // leading bright dot
+      X.beginPath(); X.arc(ex,b.y,2.5,0,Math.PI*2);
+      X.fillStyle=b.color+'cc'; X.fill();
+    });
+
+    // ── 5. Floating QA keyword particles ──
+    particles.forEach(p => {
+      if(frame < p.delay) return;
+      p.y -= p.speed;
+      p.x += p.drift;
+      if(p.y < -40){ 
+        p.y = H + 20; 
+        p.x = Math.random()*W;
+        p.word = WORDS[Math.floor(Math.random()*WORDS.length)];
+        p.opacity = 0.03 + Math.random()*0.05;
+      }
+      if(p.x < -200) p.x = W+50;
+      if(p.x > W+200) p.x = -50;
+      X.font = `${p.size}px 'DM Mono', 'Courier New', monospace`;
+      X.fillStyle = p.color + Math.floor(p.opacity*255).toString(16).padStart(2,'0');
+      X.fillText(p.word, p.x, p.y);
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
+
+<script>
+// ── Active nav highlight on scroll ──
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+function updateActiveNav() {
+  const scrollY = window.scrollY + 100;
+  let current = '';
+  sections.forEach(sec => {
+    if (scrollY >= sec.offsetTop) current = sec.getAttribute('id');
+  });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+  });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+</script>
+</body>
+</html>
